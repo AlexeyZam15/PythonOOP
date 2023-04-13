@@ -1,4 +1,8 @@
 from game_oop.baseHero import BaseHero
+from game_oop.farmer import Farmer
+from random import randint
+
+from game_oop.names import Names
 
 
 class Team:

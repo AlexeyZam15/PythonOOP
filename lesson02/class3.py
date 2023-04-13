@@ -18,7 +18,7 @@ class D(C, A):
     def a(self):
         super(B, self).a()
         # super().a()
-        # print(self.__class__.__mro__)
+        # print(team_side.__class__.__mro__)
 
 
 D().a()

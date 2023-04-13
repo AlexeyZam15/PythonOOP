@@ -7,7 +7,7 @@ class V2(Verification):
     def __init__(self, login, password, age):
         # super() Автоматически ищет методв в родительских классах
         super().__init__(login, password)
-        # Verification.__init__(self, login, password)
+        # Verification.__init__(team_side, login, password)
         self.__save()
         self.age = age
 
@@ -17,7 +17,7 @@ class V2(Verification):
                 if f'{self.login, self.password}\n' == i:
                     raise ValueError('Такой есть')
         super().save()
-        # Verification.save(self)
+        # Verification.save(team_side)
 
     def show(self):
         return self.login, self.password

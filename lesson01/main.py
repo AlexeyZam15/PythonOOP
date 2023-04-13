@@ -12,7 +12,7 @@ from tkinter import Tk
 # root.mainloop()
 
 # class Purse:
-#     def show(self, name='Unknown'):
+#     def show(team_side, name='Unknown'):
 #         print("hello " + name)
 #
 # x = Purse()
