@@ -1,13 +1,27 @@
 from baseHero import BaseHero
+from team import Team
+from game_oop.farmer import Farmer
 from names import Names
 
-for i in range(10):
-    hero1 = BaseHero("Герой", 100, Names.get_random_name(), True, 100, (8, 10), 10)
+holy_team = Team()
+dark_team = Team()
 
-print(*BaseHero.get_holy_team(), sep="\n")
-print(BaseHero.get_count())
+for i in range(1, 11):
+    holy_team.append(Farmer(Names.get_random_name()))
 
-for i in range(10):
-    BaseHero("Герой", 100, Names.get_random_name(), False, 100, (8, 10), 10)
-print(*BaseHero.get_dark_team(), sep="\n")
-print(BaseHero.get_count())
+print(*holy_team, sep="\n")
+
+for i in range(1, 11):
+    dark_team.append(Farmer(Names.get_random_name()))
+
+print()
+
+print(*dark_team, sep="\n")
+
+print()
+
+print(*Team.all_team, sep="\n")
+
+print(Team.count)
+
+# list(map(lambda x: x.__get_ally_team(), BaseHero.get_dark_team()))
