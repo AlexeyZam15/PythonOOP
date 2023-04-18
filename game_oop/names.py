@@ -4,7 +4,7 @@ from random import randint
 class Names:
     @staticmethod
     def get_random_name():
-        return Names.__NamesList[randint(0, len(Names.__NamesList))]
+        return Names.__NamesList[randint(0, len(Names.__NamesList)-1)]
 
     __NamesList = """Абакум, Абрам, Абросим, Аввакум, Август, Авдей, Авдий, Авель, Авенир, Аверий, Аверкий, Аверьян, Авксентий, 
 Авраам, Авраамий, Аврам, Аврамий, Аврелиан, Автоном, Агап, Агапий, Агапит, Агафангел, Агафон, Аггей, Адам, Адриан, 

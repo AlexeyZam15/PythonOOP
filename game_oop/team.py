@@ -1,8 +1,4 @@
-from game_oop.baseHero import BaseHero
-from game_oop.farmer import Farmer
-from random import randint
-
-from game_oop.names import Names
+from game_oop.units.baseHero import BaseHero
 
 
 class Team:
@@ -27,3 +23,9 @@ class Team:
         self.__heroes.append(hero)
         Team.all_team.append(hero)
         Team.count += 1
+
+    def __getitem__(self, key):
+        return self.__heroes[key]
+
+    def __contains__(self, hero: BaseHero):
+        return self.__heroes.__contains__(hero)
