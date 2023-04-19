@@ -29,7 +29,7 @@ class View:
         out = "| "
         for human in all_team:
             if human.equal_coords(x, y):
-                if human.get_hp() != 0:
+                if human.hp != 0:
                     if holy_team.__contains__(human):
                         out = "|" + AnsiColors.ANSI_BLUE + human.class_name[0] + AnsiColors.ANSI_RESET
                         break
@@ -69,7 +69,7 @@ class View:
         print(dark_team[0], end="\n")
         print(middle_10, end="\n")
 
-        for i in range(2, 11):
+        for i in range(2, 10):
             for j in range(1, 11):
                 print(View.get_char(i, j, all_team, dark_team, holy_team), end="")
             print("|    ", end="")

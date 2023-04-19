@@ -2,35 +2,26 @@ from game_oop.units.bowman import Bowman
 from game_oop.view.view import View
 from team import Team
 from game_oop.units.farmer import Farmer
-from names import Names
-from random import randint
 
 
-def fill_team(team: Team, size: int, cls: list, team_side):
-    for i in range(size):
-        team.append(cls[randint(0, len(cls) - 1)](Names.get_random_name(), team_side))
+def main():
+    classes = list({Farmer, Bowman})
+
+    holy_team = Team()
+    dark_team = Team()
+    Team.fill_teams(dark_team, holy_team, 10, classes)
+    all_team = Team.all_team
+
+    string = ""
+    with open("actions_log.txt", "w", encoding="utf-8") as file:
+        file.write("")
+    while string != "q":
+        initiative_list = sorted(all_team.copy(), key=lambda h: h.initiative, reverse=True)
+        for hero in initiative_list:
+            hero.step(dark_team, holy_team)
+        View.view(all_team, dark_team, holy_team)
+        string = input("Нажмите enter для продолжения или введите q для выхода")
 
 
-classes = list({Farmer, Bowman})
-
-holy_team = Team()
-fill_team(holy_team, 10, classes, True)
-dark_team = Team()
-fill_team(dark_team, 10, classes, False)
-all_team = Team.all_team
-
-View.view(all_team, dark_team, holy_team)
-
-# print(*holy_team, sep="\n")
-#
-# print()
-#
-# print(*dark_team, sep="\n")
-#
-# print()
-
-# print(*Team.all_team, sep="\n")
-#
-# print(Team.count)
-
-# list(map(lambda x: x.__get_ally_team(), BaseHero.get_dark_team()))
+if __name__ == "__main__":
+    main()

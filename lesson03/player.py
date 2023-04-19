@@ -13,15 +13,15 @@ class Player:
 
     # @ - декораторы
     # геттер
-    # def get_lvl(team_side):
-    #     return team_side.__lvl
+    def get_lvl(self):
+        return self.__lvl
     @property
     def lvl(self):
         return self.__lvl, f'{dt.now() - self.__born}'
 
     # сеттер
-    # def set_lvl(team_side, numeric):
-    #     team_side.__lvl += numeric
+    def set_lvl(self, numeric):
+        self.__lvl += numeric
     @lvl.setter
     def lvl(self, numeric):
         self.__lvl += Player.__type_test(numeric)
