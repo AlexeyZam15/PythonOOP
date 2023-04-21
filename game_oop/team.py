@@ -13,6 +13,7 @@ class Team:
         self.__size = 0
 
     def __iter__(self):
+        self._current_index = 0
         return self
 
     def __next__(self):
@@ -51,7 +52,7 @@ class Team:
     def filter_visible_team(self):
         live_team = Team()
         live_team.copy(self)
-        for hero in live_team:
+        for hero in self:
             if hero.state != "Stand":
                 live_team.remove(hero)
         return live_team
@@ -63,3 +64,15 @@ class Team:
     def copy(self, copy_object):
         self.__heroes = copy_object.__heroes.copy()
         self.__size = copy_object.size
+
+    def has_live_ally(self, class_name: str):
+        for hero in self.__heroes:
+            if hero.class_name == class_name and hero.state == "Stand":
+                return True
+        return False
+
+    def get_live_ally(self, class_name: str):
+        for hero in self.__heroes:
+            if hero.class_name == class_name and hero.state == "Stand":
+                return hero
+        return self

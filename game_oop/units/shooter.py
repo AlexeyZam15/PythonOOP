@@ -16,11 +16,25 @@ class Shooter(BaseHero, ABC):
 
     def shoot(self, enemy: BaseHero):
         self.__arrows -= 1
-        dmg = randint(self.__damage[0], self.__damage[1])
+        dmg = randint(self.damage[0], self.damage[1])
         self.log(self.get_info() + " стреляет в " + enemy.get_info())
         enemy.get_damage(dmg)
 
     def step(self, dark_team, holy_team):
-        if self.cant_turn(self.get_enemy_team(dark_team, holy_team)):
+        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible_team()
+        if self.cant_turn(enemy_team):
             return
         self.turn_begin()
+        ally_team = self.get_ally_team(dark_team, holy_team)
+        if ally_team.has_live_ally("Фермер") and self.__arrows != self.__max_arrows:
+            self.__arrows += 1
+            peasant = ally_team.get_live_ally("Фермер")
+            peasant.state = "Busy"
+            self.log(f'{self.get_info()} берёт стрелу от {peasant.get_info()}')
+        if self.__arrows >= 1:
+            closest_hero = self.find_closest_hero(enemy_team)
+            # print(closest_hero.state)
+            self.shoot(closest_hero)
+        else:
+            self.log(f'{self.get_info()} берёт стрелу со склада')
+            self.__arrows += 1

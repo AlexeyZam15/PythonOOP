@@ -13,3 +13,4 @@ class Farmer(BaseHero):
         if self.state == "Busy":
             self.log(self.get_info() + " пополнил запасы")
             self.state = "Stand"
+        pass

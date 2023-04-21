@@ -20,13 +20,14 @@ class BaseHero(ABC):
         self.__position = Coords(team_side)
 
     def __str__(self):
-        return self.__class_name[0] + " " + self.__name + " 💗: " + str(self.__hp) + " 🛡️: " + str(self.__armor) \
-            + " 🎿: " + str(self.__initiative) + " ⚔️: " + (str(self.__damage[0]) + "-" + str(self.__damage[1])) \
-            + " Статус: " + self.__state.replace("Dead", "💀").replace("Stand", "🙂") \
-            + " x: " + str(self.__position.x) + " y: " + str(self.__position.y)
+        return f'{self.__class_name[0]} {self.__name} 💗: {self.__hp} 🛡️: {self.__armor} ' \
+               f'🎿: {self.__initiative} ⚔️: {self.__damage[0]} - {self.__damage[1]} ' \
+               f'Статус: {self.__state.replace("Dead", "💀").replace("Stand", "🙂")} ' \
+               f'{self.__position}'
 
-    def equal_coords(self, x: int, y: int):
-        return self.__position.x == x and self.__position.y == y
+    @property
+    def position(self):
+        return self.__position
 
     @property
     def hp(self):
@@ -90,13 +91,9 @@ class BaseHero(ABC):
         return
 
     def cant_turn(self, enemy_team):
-        # print(enemy_team.size)
         if self.state == "Dead":
             return True
-        # visible_team = list(filter(lambda s: s.state == "Stand", enemy_team))
-        visible_team = enemy_team.filter_visible_team()
-        # print(visible_team.size)
-        if visible_team.size == 0:
+        if enemy_team.size == 0:
             return True
         return False
 
@@ -115,3 +112,19 @@ class BaseHero(ABC):
     @property
     def initiative(self):
         return self.__initiative
+
+    def find_closest_hero(self, team):
+        closest_hero = team[0]
+        distance = self.position.get_distance(closest_hero.position)
+        min_distance = distance
+        for i in range(1, team.size):
+            distance = self.position.get_distance(team[i].position)
+            if distance < min_distance:
+                min_distance = distance
+                closest_hero = team[i]
+        # print(self.get_info(), min_distance, closest_hero.get_info())
+        return closest_hero
+
+    @property
+    def damage(self):
+        return self.__damage

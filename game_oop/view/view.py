@@ -1,6 +1,4 @@
 from game_oop.view.ansiColors import AnsiColors
-from game_oop.team import Team
-
 
 class View:
     @staticmethod
@@ -25,10 +23,10 @@ class View:
             print(":\t", end="")
 
     @staticmethod
-    def get_char(y: int, x: int, all_team: Team, dark_team: Team, holy_team: Team):
+    def get_char(y: int, x: int, all_team, dark_team, holy_team):
         out = "| "
         for human in all_team:
-            if human.equal_coords(x, y):
+            if human.position.equal_coords(x, y):
                 if human.hp != 0:
                     if holy_team.__contains__(human):
                         out = "|" + AnsiColors.ANSI_BLUE + human.class_name[0] + AnsiColors.ANSI_RESET
@@ -42,7 +40,7 @@ class View:
         return out
 
     @staticmethod
-    def view(all_team: Team, dark_team: Team, holy_team: Team):
+    def view(all_team, dark_team, holy_team):
 
         step = 1
         l = list({0})
