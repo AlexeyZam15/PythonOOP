@@ -10,7 +10,6 @@ class Team:
     def __init__(self):
         self.__heroes = list()
         self._current_index = 0
-        self.__size = 0
 
     def __iter__(self):
         self._current_index = 0
@@ -27,7 +26,6 @@ class Team:
         self.__heroes.append(hero)
         Team.all_team.append(hero)
         Team.count += 1
-        self.__size += 1
 
     def __getitem__(self, key):
         return self.__heroes[key]
@@ -45,11 +43,7 @@ class Team:
             first_team.append(cls[randint(0, len(cls) - 1)](Names.get_random_name(), False))
             second_team.append(cls[randint(0, len(cls) - 1)](Names.get_random_name(), True))
 
-    @property
-    def size(self):
-        return self.__size
-
-    def filter_visible_team(self):
+    def filter_visible(self):
         live_team = Team()
         live_team.copy(self)
         for hero in self:
@@ -59,11 +53,9 @@ class Team:
 
     def remove(self, hero):
         self.__heroes.remove(hero)
-        self.__size -= 1
 
     def copy(self, copy_object):
         self.__heroes = copy_object.__heroes.copy()
-        self.__size = copy_object.size
 
     def has_live_ally(self, class_name: str):
         for hero in self.__heroes:
@@ -76,3 +68,31 @@ class Team:
             if hero.class_name == class_name and hero.state == "Stand":
                 return hero
         return self
+
+    def has_injured_hero(self):
+        for hero in self:
+            if hero == self:
+                continue
+            if hero.max_hp > hero.hp:
+                return True
+        return False
+
+    def get_lowest_hp_hero(self):
+        max_hp_diff = self[0].hp_diff
+        lowest_hp_hero = self[0]
+        for hero in self:
+            if max_hp_diff < hero.hp_diff:
+                max_hp_diff = hero.hp_diff
+                lowest_hp_hero = hero
+        return lowest_hp_hero
+
+    def filter_live(self):
+        live_team = Team()
+        live_team.copy(self)
+        for hero in self:
+            if hero.state == "Dead":
+                live_team.remove(hero)
+        return live_team
+
+    def __len__(self):
+        return len(self.__heroes)

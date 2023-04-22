@@ -25,11 +25,11 @@ class Spellcaster(BaseHero, ABC):
         return 30
 
     def step(self, dark_team, holy_team):
-        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible_team()
+        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible()
         if self.cant_turn(enemy_team):
             return
         self.turn_begin()
-        ally_team = self.get_ally_team(dark_team, holy_team)
+        ally_team = self.get_ally_team(dark_team, holy_team).filter_visible()
         if ally_team.has_live_ally("Фермер") and self.__mana + 25 < self.__max_mana:
             self.__mana += 25
             peasant = ally_team.get_live_ally("Фермер")

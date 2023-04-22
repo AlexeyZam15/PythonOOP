@@ -9,9 +9,11 @@ class BaseHero(ABC):
     @abstractmethod
     def __init__(self, class_name: str, hp: int, name: str, team_side: bool, armor: int, damage: tuple,
                  initiative: int):
+        self.__armor_buff = 0
         self.__initiative_buff = 0
         self.__class_name = class_name
         self.__hp = hp
+        self.__max_hp = hp
         self.__name = name
         self.__team_side = team_side
         self.__armor = armor
@@ -33,6 +35,10 @@ class BaseHero(ABC):
     @property
     def hp(self):
         return self.__hp
+
+    @property
+    def max_hp(self):
+        return self.__max_hp
 
     @property
     def name(self):
@@ -62,6 +68,8 @@ class BaseHero(ABC):
         if damage > 0:
             self.log(self.get_info() + f" получает {damage} урона")
         else:
+            if self.__hp - damage > self.__max_hp:
+                damage -= (self.__max_hp - (self.__hp - damage))
             self.log(self.get_info() + f" восстанавливает {-damage} здоровья")
         if self.__armor > 0:
             self.__armor -= damage
@@ -94,9 +102,9 @@ class BaseHero(ABC):
     def cant_turn(self, enemy_team):
         if self.state == "Dead":
             return True
-        if enemy_team.size == 0:
-            return True
-        return False
+        if enemy_team:
+            return False
+        return True
 
     def get_ally_team(self, dark_team, holy_team):
         if self.__team_side:
@@ -122,7 +130,7 @@ class BaseHero(ABC):
         closest_hero = team[0]
         distance = self.position.get_distance(closest_hero.position)
         min_distance = distance
-        for i in range(1, team.size):
+        for i in range(1, len(team)):
             distance = self.position.get_distance(team[i].position)
             if distance < min_distance:
                 min_distance = distance
@@ -145,4 +153,29 @@ class BaseHero(ABC):
     def reset_buffs(self):
         self.__initiative -= self.__initiative_buff
         self.__initiative_buff = 0
+        if self.__armor - self.__armor_buff >= 0:
+            self.__armor -= self.__armor_buff
+        else:
+            self.__armor = 0
+            self.__armor_buff = 0
 
+
+    @property
+    def hp_diff(self):
+        return self.__max_hp - self.__hp
+
+    @property
+    def armor(self):
+        return self.__armor
+
+    @armor.setter
+    def armor(self, value):
+        self.__armor = value
+
+    @property
+    def armor_buff(self):
+        return self.__armor_buff
+
+    @armor_buff.setter
+    def armor_buff(self, value):
+        self.__armor_buff = value

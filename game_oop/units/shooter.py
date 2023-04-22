@@ -23,7 +23,7 @@ class Shooter(BaseHero, ABC):
         enemy.get_damage(dmg)
 
     def step(self, dark_team, holy_team):
-        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible_team()
+        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible()
         if self.cant_turn(enemy_team):
             return
         self.turn_begin()
