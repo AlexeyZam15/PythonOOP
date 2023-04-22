@@ -1,10 +1,12 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from random import randint
 
 from game_oop.units.baseHero import BaseHero
 
 
 class Shooter(BaseHero, ABC):
+
+    @abstractmethod
     def __init__(self, class_name: str, hp: int, name: str, team_side: bool, armor: int, damage: tuple,
                  initiative: int):
         super().__init__(class_name, hp, name, team_side, armor, damage, initiative)
@@ -32,9 +34,9 @@ class Shooter(BaseHero, ABC):
             peasant.state = "Busy"
             self.log(f'{self.get_info()} берёт стрелу от {peasant.get_info()}')
         if self.__arrows >= 1:
-            closest_hero = self.find_closest_hero(enemy_team)
+            closest_enemy = self.find_closest_hero(enemy_team)
             # print(closest_hero.state)
-            self.shoot(closest_hero)
+            self.shoot(closest_enemy)
         else:
             self.log(f'{self.get_info()} берёт стрелу со склада')
             self.__arrows += 1

@@ -1,6 +1,9 @@
 from game_oop.view.ansiColors import AnsiColors
 
+
 class View:
+    __step = 1
+
     @staticmethod
     def format_div(string: str):
         return string.replace('a', '\u250c') \
@@ -39,20 +42,18 @@ class View:
                     break
         return out
 
-    @staticmethod
-    def view(all_team, dark_team, holy_team):
+    def view(self, all_team, dark_team, holy_team):
 
-        step = 1
         l = list({0})
         top_10 = View.format_div("a") + (View.format_div("-b") + View.format_div("-c")) * 5
         middle_10 = View.format_div("d") + (View.format_div("-e") + View.format_div("-f")) * 5
         bottom_10 = View.format_div("g") + (View.format_div("-h") + View.format_div("-i")) * 5
 
-        if step == 1:
+        if self.__step == 1:
             print(AnsiColors.ANSI_RED + "First step" + AnsiColors.ANSI_RESET, end="")
         else:
-            print(AnsiColors.ANSI_RED + "step: " + str(step) + AnsiColors.ANSI_RESET, end="")
-        step += 1
+            print(AnsiColors.ANSI_RED + "step: " + str(self.__step) + AnsiColors.ANSI_RESET, end="")
+        self.__step += 1
         l[0] = max([max(l[0], len(str(v))) for v in all_team])
         print("_" * l[0] * 2, end="\n")
         print(top_10 + "    ", end="")

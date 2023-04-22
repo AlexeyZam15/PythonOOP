@@ -9,6 +9,7 @@ class BaseHero(ABC):
     @abstractmethod
     def __init__(self, class_name: str, hp: int, name: str, team_side: bool, armor: int, damage: tuple,
                  initiative: int):
+        self.__initiative_buff = 0
         self.__class_name = class_name
         self.__hp = hp
         self.__name = name
@@ -113,6 +114,10 @@ class BaseHero(ABC):
     def initiative(self):
         return self.__initiative
 
+    @initiative.setter
+    def initiative(self, value):
+        self.__initiative = value
+
     def find_closest_hero(self, team):
         closest_hero = team[0]
         distance = self.position.get_distance(closest_hero.position)
@@ -128,3 +133,16 @@ class BaseHero(ABC):
     @property
     def damage(self):
         return self.__damage
+
+    @property
+    def initiative_buff(self):
+        return self.__initiative_buff
+
+    @initiative_buff.setter
+    def initiative_buff(self, value):
+        self.__initiative_buff = value
+
+    def reset_buffs(self):
+        self.__initiative -= self.__initiative_buff
+        self.__initiative_buff = 0
+
