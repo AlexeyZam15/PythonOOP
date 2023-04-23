@@ -26,24 +26,25 @@ class View:
             print(":\t", end="")
 
     @staticmethod
-    def get_char(y: int, x: int, all_team, dark_team, holy_team):
+    def get_char(y: int, x: int, all_team):
         out = "| "
-        for human in all_team:
-            if human.position.equal_coords(x, y):
-                if human.hp != 0:
-                    if holy_team.__contains__(human):
-                        out = "|" + AnsiColors.ANSI_BLUE + human.class_name[0] + AnsiColors.ANSI_RESET
+        for hero in all_team:
+            if hero.position.equal_coords(x, y):
+                if hero.hp != 0:
+                    if hero.team_side:
+                        out = "|" + AnsiColors.ANSI_BLUE + hero.class_name[0] + AnsiColors.ANSI_RESET
                         break
-                    elif dark_team.__contains__(human):
-                        out = "|" + (AnsiColors.ANSI_GREEN + human.class_name[0] + AnsiColors.ANSI_RESET)
+                    else:
+                        out = "|" + (AnsiColors.ANSI_GREEN + hero.class_name[0] + AnsiColors.ANSI_RESET)
                         break
                 else:
-                    out = "|" + (AnsiColors.ANSI_RED + human.class_name[0] + AnsiColors.ANSI_RESET)
+                    out = "|" + (AnsiColors.ANSI_RED + hero.class_name[0] + AnsiColors.ANSI_RESET)
                     break
         return out
 
     def view(self, all_team, dark_team, holy_team):
 
+        all_team = sorted(all_team, key=lambda h: h.state, reverse=True)
         l = list({0})
         top_10 = View.format_div("a") + (View.format_div("-b") + View.format_div("-c")) * 5
         middle_10 = View.format_div("d") + (View.format_div("-e") + View.format_div("-f")) * 5
@@ -61,7 +62,7 @@ class View:
         print(" " * (l[0] - 9), end="")
         print(AnsiColors.ANSI_GREEN + " \tGreen side" + AnsiColors.ANSI_RESET, end="\n")
         for i in range(1, 11):
-            print(View.get_char(1, i, all_team, dark_team, holy_team), end="")
+            print(View.get_char(1, i, all_team), end="")
         print("|    ", end="")
         print(holy_team[0], end="")
         View.tab_setter(len(str(holy_team[0])), l[0])
@@ -70,14 +71,15 @@ class View:
 
         for i in range(2, 10):
             for j in range(1, 11):
-                print(View.get_char(i, j, all_team, dark_team, holy_team), end="")
+                print(View.get_char(i, j, all_team), end="")
             print("|    ", end="")
             print(holy_team[i - 1], end="")
             View.tab_setter(len(str(holy_team[i - 1])), l[0])
             print(dark_team[i - 1], end="\n")
             print(middle_10, end="\n")
+
         for j in range(1, 11):
-            print(View.get_char(10, j, all_team, dark_team, holy_team), end="")
+            print(View.get_char(10, j, all_team), end="")
         print("|    ", end="")
         print(holy_team[9], end="")
         View.tab_setter(len(str(holy_team[9])), l[0])

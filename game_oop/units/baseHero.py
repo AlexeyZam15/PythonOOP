@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
-from game_oop.coords import Coords
-from game_oop.team import Team
+from game_oop.aux_modules.coords import Coords
 
 
 class BaseHero(ABC):
@@ -126,7 +125,7 @@ class BaseHero(ABC):
     def initiative(self, value):
         self.__initiative = value
 
-    def find_closest_hero(self, team):
+    def get_closest_hero(self, team):
         closest_hero = team[0]
         distance = self.position.get_distance(closest_hero.position)
         min_distance = distance
@@ -159,7 +158,6 @@ class BaseHero(ABC):
             self.__armor = 0
             self.__armor_buff = 0
 
-
     @property
     def hp_diff(self):
         return self.__max_hp - self.__hp
@@ -179,3 +177,7 @@ class BaseHero(ABC):
     @armor_buff.setter
     def armor_buff(self, value):
         self.__armor_buff = value
+
+    @property
+    def team_side(self):
+        return self.__team_side

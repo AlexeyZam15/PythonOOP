@@ -22,3 +22,19 @@ class Coords:
 
     def get_distance(self, coords):
         return ((self.__x - coords.__x) ** 2 + (self.__y - coords.__y) ** 2) ** (1 / 2)
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, value):
+        self.__x = value
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, value):
+        self.__y = value

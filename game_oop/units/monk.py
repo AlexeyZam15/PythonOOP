@@ -21,7 +21,7 @@ class Monk(Spellcaster):
         self.log(f'{self.get_info()} применяет заклинание Каменный Доспех на {ally.get_info()}')
 
     def cast_spell(self, ally_team, enemy_team):
-        closest_enemy = self.find_closest_hero(enemy_team)
+        closest_enemy = self.get_closest_hero(enemy_team)
         if self.mana >= self.big_spell_cost and ally_team.has_injured_hero():
             self.cast_heal(ally_team.get_lowest_hp_hero())
         else:
@@ -30,4 +30,4 @@ class Monk(Spellcaster):
             elif ally_team.has_live_ally("Копейщик"):
                 self.cast_stone_armor(ally_team.get_live_ally("Копейщик"))
             else:
-                self.cast_stone_armor(closest_enemy.find_closest_hero(ally_team))
+                self.cast_stone_armor(closest_enemy.get_closest_hero(ally_team))

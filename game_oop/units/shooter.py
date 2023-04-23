@@ -34,7 +34,7 @@ class Shooter(BaseHero, ABC):
             peasant.state = "Busy"
             self.log(f'{self.get_info()} берёт стрелу от {peasant.get_info()}')
         if self.__arrows >= 1:
-            closest_enemy = self.find_closest_hero(enemy_team)
+            closest_enemy = self.get_closest_hero(enemy_team)
             # print(closest_hero.state)
             self.shoot(closest_enemy)
         else:

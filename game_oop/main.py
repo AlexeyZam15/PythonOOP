@@ -1,9 +1,10 @@
 from game_oop.units.bowman import Bowman
 from game_oop.units.crossbowman import Crossbowman
 from game_oop.units.monk import Monk
+from game_oop.units.spearman import Spearman
 from game_oop.units.wizard import Wizard
 from game_oop.view.view import View
-from team import Team
+from game_oop.aux_modules.team import Team
 from game_oop.units.farmer import Farmer
 
 
@@ -21,12 +22,12 @@ def print_win(dark_team):
 
 
 def main():
-    classes = list({Farmer, Bowman, Crossbowman, Wizard, Monk})
+    classes = list({Farmer, Bowman, Crossbowman, Wizard, Monk, Spearman})
 
     holy_team = Team()
     dark_team = Team()
     Team.fill_teams(dark_team, holy_team, 10, classes)
-    all_team = Team.all_team
+    all_team = holy_team + dark_team
     string = ""
     view_o = View()
     step = 1

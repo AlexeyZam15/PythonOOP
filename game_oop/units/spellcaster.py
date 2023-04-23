@@ -41,6 +41,8 @@ class Spellcaster(BaseHero, ABC):
             self.log(f'{self.get_info()} берёт зелье маны со склада')
             self.__mana += 25
 
+        self.reset_buffs()
+
     def __str__(self):
         return super().__str__().replace("Статус", "💧: " + str(self.__mana) + " Статус")
 

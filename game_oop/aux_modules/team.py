@@ -1,6 +1,6 @@
 from random import randint
 
-from game_oop.names import Names
+from game_oop.aux_modules.names import Names
 
 
 class Team:
@@ -54,8 +54,11 @@ class Team:
     def remove(self, hero):
         self.__heroes.remove(hero)
 
-    def copy(self, copy_object):
-        self.__heroes = copy_object.__heroes.copy()
+    def temp_copy(self):
+        return Team().copy(self)
+
+    def copy(self, import_object):
+        self.__heroes = import_object.__heroes.copy()
 
     def has_live_ally(self, class_name: str):
         for hero in self.__heroes:
@@ -96,3 +99,16 @@ class Team:
 
     def __len__(self):
         return len(self.__heroes)
+
+    def check_position(self, pos_x: int, pos_y: int):
+        if pos_x > 10 or pos_y > 10 or pos_x < 1 or pos_y < 1:
+            return False
+        for hero in self:
+            if hero.position.x == pos_x and hero.position.y == pos_y:
+                return False
+        return True
+
+    def __add__(self, other):
+        new_team = Team()
+        new_team.__heroes = self.__heroes + other.__heroes
+        return new_team
