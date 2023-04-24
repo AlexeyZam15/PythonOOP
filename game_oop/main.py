@@ -1,6 +1,7 @@
 from game_oop.units.bowman import Bowman
 from game_oop.units.crossbowman import Crossbowman
 from game_oop.units.monk import Monk
+from game_oop.units.rogue import Rogue
 from game_oop.units.spearman import Spearman
 from game_oop.units.wizard import Wizard
 from game_oop.view.view import View
@@ -22,7 +23,7 @@ def print_win(dark_team):
 
 
 def main():
-    classes = list({Farmer, Bowman, Crossbowman, Wizard, Monk, Spearman})
+    classes = list({Farmer, Bowman, Crossbowman, Wizard, Monk, Spearman, Rogue})
 
     holy_team = Team()
     dark_team = Team()

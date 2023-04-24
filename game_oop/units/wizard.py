@@ -12,6 +12,8 @@ class Wizard(Spellcaster):
         closest_enemy = self.get_closest_hero(enemy_team)
         if self.mana >= self.big_spell_cost:
             self.cast_fireball(closest_enemy)
+        elif ally_team.has_live_ally("Копейщик"):
+            self.cast_acceleration(ally_team.get_live_ally("Копейщик"))
         else:
             self.cast_acceleration(closest_enemy.get_closest_hero(ally_team))
 

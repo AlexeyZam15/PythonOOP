@@ -15,12 +15,13 @@ class Infantry(BaseHero, ABC):
         self.log(f'{self.get_info()} атакует {enemy.get_info()}')
         enemy.get_damage(randint(self.damage[0], self.damage[1]))
 
-    def step(self, dark_team, holy_team):
-        enemy_team = self.get_enemy_team(dark_team, holy_team).filter_visible()
-        if self.cant_turn(enemy_team):
-            return
-        self.turn_begin()
+    @staticmethod
+    def filter_visible_special(enemy_team):
+        return enemy_team.filter_visible()
 
+    def step(self, dark_team, holy_team):
+
+        enemy_team = self.filter_visible_special(self.get_enemy_team(dark_team, holy_team))
         closest_enemy: BaseHero = self.get_closest_hero(enemy_team)
         enemy_position = closest_enemy.position
         my_position = self.position
@@ -48,7 +49,7 @@ class Infantry(BaseHero, ABC):
             move_y += s_y
 
         flag = True
-        ally_team = self.get_ally_team(dark_team, holy_team).filter_visible()
+        ally_team = self.filter_visible_special(self.get_ally_team(dark_team, holy_team))
 
         if not ally_team.check_position(my_position.x + move_x, my_position.y + move_y):
             move_x = 0

@@ -7,7 +7,7 @@ class Farmer(BaseHero):
         super().__init__("Фермер", 50, name, team_side, 30, (8, 10), 1)
 
     def step(self, dark_team, holy_team):
-        if self.cant_turn(self.get_enemy_team(dark_team, holy_team)):
+        if self.cant_turn(self.get_enemy_team(dark_team, holy_team).filter_visible()):
             return
         self.turn_begin()
         if self.state == "Busy":

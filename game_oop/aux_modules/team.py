@@ -47,7 +47,15 @@ class Team:
         live_team = Team()
         live_team.copy(self)
         for hero in self:
-            if hero.state != "Stand":
+            if hero.state == "Dead" or hero.state == "Hide":
+                live_team.remove(hero)
+        return live_team
+
+    def filter_visible_rogue(self):
+        live_team = Team()
+        live_team.copy(self)
+        for hero in self:
+            if hero.state == "Dead":
                 live_team.remove(hero)
         return live_team
 
