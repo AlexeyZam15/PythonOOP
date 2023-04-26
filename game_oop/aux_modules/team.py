@@ -120,3 +120,13 @@ class Team:
         new_team = Team()
         new_team.__heroes = self.__heroes + other.__heroes
         return new_team
+
+    def get_hero_by_pos(self, x, y):
+        r_hero = None
+        for hero in self:
+            if hero.position.x == x and hero.position.y == y:
+                if hero.state == "Dead" and hero is None:
+                    r_hero = hero
+                else:
+                    r_hero = hero
+        return r_hero
